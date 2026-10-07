@@ -1,67 +1,138 @@
 # VectorX
 
-VectorX is a vector search and document retrieval system converted from an existing C++ implementation to Java.
+VectorX is a Java-based vector search and document retrieval platform built with Spring Boot and Next.js.
 
-The project preserves the original vector database functionality while providing a redesigned web interface for vector search, indexing algorithms, benchmarking, HNSW inspection, document retrieval, and Ollama-powered document Q&A.
+It provides multiple vector indexing and search algorithms, configurable distance metrics, document embedding and semantic retrieval, benchmarking tools, HNSW graph inspection, and Ollama-powered RAG capabilities through a unified web dashboard.
 
-> **Project goal:** Convert the existing C++ implementation to Java without adding new functionality, while improving the frontend interface and user experience.
+---
+
+## Overview
+
+VectorX combines vector search, document retrieval, embeddings, and AI-powered question answering into a single application.
+
+The system allows users to:
+
+- Store and manage vectors
+- Search vectors using different algorithms
+- Compare search performance
+- Select different distance metrics
+- Inspect the HNSW graph
+- Add and manage documents
+- Generate document embeddings
+- Perform semantic document search
+- Ask questions using retrieved document context
+- Use Ollama for local embeddings and text generation
+
+The backend is implemented with Java and Spring Boot, while the frontend is built with Next.js, React, TypeScript, and Tailwind CSS.
 
 ---
 
 ## Features
 
-- Vector insertion and deletion
-- Vector similarity search
-- Multiple search algorithms:
-    - Brute Force
-    - KD-Tree
-    - HNSW
-- Multiple distance metrics:
-    - Cosine
-    - Euclidean
-    - Manhattan
-- Search benchmarking
-- HNSW graph inspection
-- Document insertion and deletion
-- Document chunking and embedding
-- Semantic document search
-- Retrieval-Augmented Generation (RAG)
-- Ollama integration
-- Interactive web dashboard
-- REST API backend
-- In-memory vector and document storage
+### Vector Search
+
+- Insert vectors
+- Delete vectors
+- Search nearest vectors
+- Retrieve stored vectors
+- Configurable result count
+- Multiple search algorithms
+- Multiple distance metrics
+
+### Search Algorithms
+
+- Brute Force
+- KD-Tree
+- HNSW
+
+### Distance Metrics
+
+- Cosine Distance
+- Euclidean Distance
+- Manhattan Distance
+
+### Benchmarking
+
+- Compare Brute Force, KD-Tree, and HNSW
+- Measure search latency
+- Run the same query across different algorithms
+- View benchmark results directly from the dashboard
+
+### HNSW Graph
+
+- View total nodes
+- View maximum graph layer
+- View nodes per layer
+- View edges per layer
+- Inspect graph nodes
+- Inspect graph edges
+
+### Document Retrieval
+
+- Add documents
+- Delete documents
+- List stored documents
+- Automatically split documents into chunks
+- Generate embeddings for document chunks
+- Perform semantic document search
+
+### RAG
+
+- Ask questions against stored documents
+- Retrieve relevant document chunks
+- Generate answers using Ollama
+- Display retrieved contexts and similarity distances
+
+### Dashboard
+
+- Interactive vector search interface
+- Algorithm selection
+- Metric selection
+- Vector management
+- Benchmark dashboard
+- HNSW inspection
+- Document management
+- RAG question answering
+- System status monitoring
 
 ---
 
-## Tech Stack
+## Technology Stack
 
 ### Backend
 
-- Java 21
-- Spring Boot
-- Spring Web
-- Maven
-- REST APIs
+| Technology | Purpose |
+|---|---|
+| Java 21 | Backend development |
+| Spring Boot | Application framework |
+| Spring Web | REST API development |
+| Maven | Dependency and build management |
 
 ### Frontend
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Lucide React
+| Technology | Purpose |
+|---|---|
+| Next.js | Frontend framework |
+| React | UI development |
+| TypeScript | Type-safe frontend development |
+| Tailwind CSS | Styling |
+| Lucide React | Interface icons |
 
-### AI / Embeddings
+### AI and Embeddings
 
-- Ollama
-- `nomic-embed-text`
-- `llama3.2`
+| Technology | Purpose |
+|---|---|
+| Ollama | Local AI runtime |
+| nomic-embed-text | Text embeddings |
+| llama3.2 | Text generation |
 
 ### Algorithms
 
-- Brute Force Search
-- KD-Tree
-- HNSW
+| Algorithm | Purpose |
+|---|---|
+| Brute Force | Exact nearest-neighbor baseline |
+| KD-Tree | Tree-based vector search |
+| HNSW | Graph-based approximate nearest-neighbor search |
 
 ---
 
@@ -70,79 +141,84 @@ The project preserves the original vector database functionality while providing
 ```text
                          VectorX
                             │
-              ┌─────────────┴─────────────┐
-              │                           │
-          Frontend                    Backend
-        Next.js / React            Spring Boot / Java
-              │                           │
-              │                  ┌────────┴────────┐
-              │                  │                 │
-              │             Vector Database   Document Database
-              │                  │                 │
-              │          ┌───────┼───────┐         │
-              │          │       │       │         │
-              │      Brute     KD-Tree  HNSW       │
-              │      Force                         │
-              │                                    │
-              │                              Ollama
-              │                           ┌────────┴────────┐
-              │                           │                 │
-              │                    Embeddings          Generation
-              │                 nomic-embed-text       llama3.2
-              │
-              └──────────── REST API ────────────────┘
+            ┌───────────────┴───────────────┐
+            │                               │
+        Next.js                         Spring Boot
+        Frontend                          Backend
+            │                               │
+            │                    ┌──────────┴──────────┐
+            │                    │                     │
+            │              Vector Database       Document Database
+            │                    │                     │
+            │          ┌─────────┼─────────┐           │
+            │          │         │         │           │
+            │      Brute Force KD-Tree   HNSW          │
+            │                                          │
+            │                                      Ollama
+            │                                   ┌──────┴──────┐
+            │                                   │             │
+            │                              Embeddings     Generation
+            │                              nomic-embed     llama3.2
+            │
+            └────────────── REST APIs ─────────────────────┘
 ```
 
 ---
 
-## Vector Search
+# Vector Search
 
-VectorX supports three search algorithms.
+VectorX provides three vector search implementations.
 
-### Brute Force
+## Brute Force
 
-Brute Force compares the query vector against every stored vector.
+Brute Force compares the query vector with every stored vector.
 
-It provides a straightforward baseline for comparing the performance of the other algorithms.
+It provides an exact search baseline and is useful for evaluating the performance of other search algorithms.
 
-### KD-Tree
+## KD-Tree
 
-KD-Tree organizes vectors into a tree structure and uses spatial partitioning during search.
+KD-Tree organizes vectors using a multidimensional tree structure.
 
-### HNSW
+During search, the tree structure is used to reduce unnecessary distance calculations.
 
-HNSW (Hierarchical Navigable Small World) uses a layered graph structure for approximate nearest-neighbor search.
+## HNSW
 
-The implementation uses:
+HNSW stands for **Hierarchical Navigable Small World**.
 
-- `M = 16`
-- `efConstruction = 200`
-- `M0 = 32`
-- Random seed `42`
+It uses a layered graph structure for approximate nearest-neighbor search.
 
-The vector dimension used by the demo database is:
+The current configuration uses:
 
 ```text
-16
+M = 16
+efConstruction = 200
+M0 = 32
+Random Seed = 42
+```
+
+The demo vector database uses:
+
+```text
+Dimensions = 16
 ```
 
 ---
 
-## Distance Metrics
+# Distance Metrics
 
 VectorX supports three distance metrics.
 
-### Cosine Distance
+## Cosine Distance
 
-Cosine distance is calculated as:
+Cosine distance is calculated using:
 
 ```text
 1 - cosine similarity
 ```
 
-Lower distance represents a closer match.
+A smaller distance represents a closer match.
 
-### Euclidean Distance
+## Euclidean Distance
 
 Euclidean distance measures the straight-line distance between two vectors.
 
@@ -150,7 +226,7 @@ Euclidean distance measures the straight-line distance between two vectors.
 sqrt(sum((a[i] - b[i])²))
 ```
 
-### Manhattan Distance
+## Manhattan Distance
 
 Manhattan distance is calculated as:
 
@@ -160,67 +236,102 @@ sum(abs(a[i] - b[i]))
 
 ---
 
-## Document Search and RAG
+# Document Retrieval
 
-VectorX supports document-based retrieval.
+VectorX supports document-based semantic retrieval.
 
-The document pipeline is:
+Documents are processed through the following pipeline:
 
 ```text
 Document
-   │
-   ▼
+    │
+    ▼
 Text Chunking
-   │
-   ▼
-Ollama Embedding
-   │
-   ▼
+    │
+    ▼
+Embedding Generation
+    │
+    ▼
 Vector Storage
-   │
-   ▼
+    │
+    ▼
 Semantic Search
-   │
-   ▼
-Relevant Context
-   │
-   ▼
-Ollama Generation
-   │
-   ▼
-Answer
+    │
+    ▼
+Relevant Chunks
 ```
 
-Documents are split into chunks before generating embeddings.
+Documents are divided into smaller text chunks before embeddings are generated.
 
-The current chunking configuration uses:
+Current chunk configuration:
 
 ```text
-Chunk size: 250 words
+Chunk Size: 250 words
 Overlap: 30 words
 ```
 
-For smaller document collections, document search uses Brute Force. Larger collections use HNSW.
+Document search uses:
+
+```text
+< 10 chunks  → Brute Force
+≥ 10 chunks  → HNSW
+```
 
 ---
 
-## Ollama Models
+# RAG Pipeline
 
-VectorX communicates with a locally running Ollama instance.
+VectorX provides Retrieval-Augmented Generation functionality.
 
-### Embedding model
+The RAG workflow is:
+
+```text
+User Question
+      │
+      ▼
+Question Embedding
+      │
+      ▼
+Vector Search
+      │
+      ▼
+Relevant Document Chunks
+      │
+      ▼
+Context Construction
+      │
+      ▼
+Ollama Generation
+      │
+      ▼
+Generated Answer
+```
+
+The system retrieves relevant document chunks before generating an answer.
+
+---
+
+# Ollama
+
+VectorX uses Ollama for local AI functionality.
+
+## Embedding Model
 
 ```text
 nomic-embed-text
 ```
 
-### Generation model
+Used to generate vector embeddings for document chunks and search questions.
+
+## Generation Model
 
 ```text
 llama3.2
 ```
 
-Default Ollama endpoint:
+Used to generate answers for the RAG workflow.
+
+## Ollama Endpoint
 
 ```text
 http://127.0.0.1:11434
@@ -228,9 +339,9 @@ http://127.0.0.1:11434
 
 ---
 
-## REST API
+# REST API
 
-### Vector APIs
+## Vector APIs
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -240,9 +351,9 @@ http://127.0.0.1:11434
 | GET | `/items` | List vectors |
 | GET | `/benchmark` | Benchmark search algorithms |
 | GET | `/stats` | Get vector database statistics |
-| GET | `/hnsw-info` | Inspect HNSW structure |
+| GET | `/hnsw-info` | Get HNSW graph information |
 
-### Document APIs
+## Document APIs
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -252,36 +363,63 @@ http://127.0.0.1:11434
 | POST | `/doc/search` | Search documents |
 | POST | `/doc/ask` | Ask a question using document retrieval |
 
-### System API
+## System API
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/status` | Check system and Ollama status |
+| GET | `/status` | Get system and Ollama status |
 
 ---
 
-## Example Vector Search
+# Vector Search API
 
-Example request:
+Example:
 
 ```text
 GET /search?v=0.1,0.2,0.3,...&k=5&metric=cosine&algo=hnsw
 ```
 
-The response contains:
+### Parameters
+
+| Parameter | Description |
+|---|---|
+| `v` | Comma-separated query vector |
+| `k` | Number of results |
+| `metric` | Distance metric |
+| `algo` | Search algorithm |
+
+Supported algorithms:
+
+```text
+bruteforce
+kdtree
+hnsw
+```
+
+Supported metrics:
+
+```text
+cosine
+euclidean
+manhattan
+```
+
+The response includes:
 
 - Search results
 - Vector IDs
 - Distances
 - Search latency
-- Selected algorithm
-- Selected metric
+- Algorithm
+- Metric
 
 ---
 
-## Benchmarking
+# Benchmarking
 
-VectorX can compare the three vector search implementations using the same query:
+VectorX provides a benchmark endpoint for comparing vector search implementations.
+
+The same query can be evaluated using:
 
 ```text
 Brute Force
@@ -289,51 +427,93 @@ KD-Tree
 HNSW
 ```
 
-The benchmark reports search latency for each algorithm.
+Example response structure:
 
-This makes it possible to compare the behavior of the different implementations using the same vector database.
+```json
+{
+  "bruteforceUs": 77,
+  "kdtreeUs": 51,
+  "hnswUs": 124,
+  "itemCount": 20
+}
+```
 
----
-
-## HNSW Inspection
-
-The dashboard provides information about the HNSW graph, including:
-
-- Node count
-- Maximum layer
-- Nodes per layer
-- Edges per layer
-- Graph nodes
-- Graph edges
-
-This provides a visual way to inspect the internal HNSW structure.
+The latency values represent the measured search time for each algorithm.
 
 ---
 
-## Frontend
+# HNSW Inspection
 
-The VectorX frontend provides a single dashboard for interacting with the backend.
+The HNSW dashboard exposes internal graph information.
+
+Available information includes:
+
+```text
+Node Count
+Top Layer
+Nodes Per Layer
+Edges Per Layer
+Graph Nodes
+Graph Edges
+```
+
+Each graph node contains information such as:
+
+```text
+ID
+Metadata
+Category
+Maximum Layer
+```
+
+Graph edges contain:
+
+```text
+Source
+Destination
+Layer
+```
+
+---
+
+# Frontend Dashboard
+
+The VectorX dashboard provides a unified interface for the backend functionality.
 
 The interface includes:
 
-- Vector search
-- Algorithm selection
-- Metric selection
-- Vector insertion
-- Vector deletion
-- Search results
-- Benchmarking
-- HNSW inspection
-- Document management
-- Semantic document search
-- RAG-based Q&A
-- System status
+### Results
 
-The UI uses a dark technical/editorial visual style with subtle animations and a restrained accent palette.
+Search vectors and view nearest-neighbor results.
+
+### Benchmark
+
+Run and compare search performance across:
+
+- Brute Force
+- KD-Tree
+- HNSW
+
+### HNSW
+
+Inspect:
+
+- Node count
+- Layers
+- Graph structure
+- Edges
+
+### Documents
+
+Manage documents and perform semantic retrieval.
+
+### RAG
+
+Ask questions and receive AI-generated answers using retrieved document information.
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```text
 VectorX/
@@ -342,29 +522,34 @@ VectorX/
 │   │
 │   ├── src/
 │   │   └── main/
-│   │       ├── java/com/vectorx/backend/
 │   │       │
-│   │       ├── algorithm/
-│   │       │   ├── BruteForce.java
-│   │       │   ├── DistanceMetrics.java
-│   │       │   ├── HNSW.java
-│   │       │   └── KDTree.java
+│   │       ├── java/
+│   │       │   └── com/vectorx/backend/
 │   │       │
-│   │       ├── controller/
-│   │       │   ├── DocumentController.java
-│   │       │   ├── StatusController.java
-│   │       │   └── VectorController.java
+│   │       │       ├── algorithm/
+│   │       │       │   ├── BruteForce.java
+│   │       │       │   ├── DistanceMetrics.java
+│   │       │       │   ├── HNSW.java
+│   │       │       │   └── KDTree.java
+│   │       │       │
+│   │       │       ├── controller/
+│   │       │       │   ├── DocumentController.java
+│   │       │       │   ├── StatusController.java
+│   │       │       │   └── VectorController.java
+│   │       │       │
+│   │       │       ├── model/
+│   │       │       │   ├── DocumentItem.java
+│   │       │       │   └── VectorItem.java
+│   │       │       │
+│   │       │       └── service/
+│   │       │           ├── DemoData.java
+│   │       │           ├── DocumentDatabase.java
+│   │       │           ├── OllamaClient.java
+│   │       │           ├── VectorDatabase.java
+│   │       │           └── VectorXService.java
 │   │       │
-│   │       ├── model/
-│   │       │   ├── DocumentItem.java
-│   │       │   └── VectorItem.java
-│   │       │
-│   │       └── service/
-│   │           ├── DemoData.java
-│   │           ├── DocumentDatabase.java
-│   │           ├── OllamaClient.java
-│   │           ├── VectorDatabase.java
-│   │           └── VectorXService.java
+│   │       └── resources/
+│   │           └── application.properties
 │   │
 │   └── pom.xml
 │
@@ -386,9 +571,9 @@ VectorX/
 
 ---
 
-## Requirements
+# Requirements
 
-Before running VectorX, install:
+Install:
 
 - Java 21
 - Maven
@@ -396,31 +581,31 @@ Before running VectorX, install:
 - npm
 - Ollama
 
-Verify Java:
+Check Java:
 
 ```powershell
 java -version
 ```
 
-Verify Maven:
+Check Maven:
 
 ```powershell
 mvn -version
 ```
 
-Verify Node.js:
+Check Node.js:
 
 ```powershell
 node -v
 ```
 
-Verify npm:
+Check npm:
 
 ```powershell
 npm -v
 ```
 
-Verify Ollama:
+Check Ollama:
 
 ```powershell
 ollama --version
@@ -428,22 +613,31 @@ ollama --version
 
 ---
 
-## Ollama Setup
+# Ollama Setup
 
-Pull the required models:
+Pull the required embedding model:
 
 ```powershell
 ollama pull nomic-embed-text
 ```
 
+Pull the generation model:
+
 ```powershell
 ollama pull llama3.2
 ```
 
-Verify the installed models:
+Verify:
 
 ```powershell
 ollama list
+```
+
+Expected models:
+
+```text
+llama3.2
+nomic-embed-text
 ```
 
 Ollama should be available at:
@@ -454,7 +648,7 @@ http://127.0.0.1:11434
 
 ---
 
-## Running the Backend
+# Running the Backend
 
 Open PowerShell:
 
@@ -462,19 +656,19 @@ Open PowerShell:
 cd D:\Projects\VectorXectorx-backend
 ```
 
-Compile the backend:
+Compile:
 
 ```powershell
 mvn clean compile
 ```
 
-Run the application:
+Run:
 
 ```powershell
 mvn spring-boot:run
 ```
 
-The backend runs on:
+Backend:
 
 ```text
 http://localhost:8080
@@ -482,7 +676,7 @@ http://localhost:8080
 
 ---
 
-## Running the Frontend
+# Running the Frontend
 
 Open another PowerShell window:
 
@@ -496,13 +690,13 @@ Install dependencies:
 npm install
 ```
 
-Start the development server:
+Start development server:
 
 ```powershell
 npm run dev
 ```
 
-The frontend is available at:
+Frontend:
 
 ```text
 http://localhost:3000
@@ -516,15 +710,33 @@ NEXT_PUBLIC_API_URL=http://localhost:8080
 
 ---
 
-## Production Build
+# Environment Configuration
 
-The frontend can be built using the Webpack production build:
+Create:
+
+```text
+vectorx-frontend/.env.local
+```
+
+with:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+Environment files are excluded from Git.
+
+---
+
+# Production Build
+
+## Frontend
 
 ```powershell
 npm run build -- --webpack
 ```
 
-The backend can be packaged using:
+## Backend
 
 ```powershell
 mvn clean package -DskipTests
@@ -532,75 +744,117 @@ mvn clean package -DskipTests
 
 ---
 
-## C++ to Java Conversion
+# Storage
 
-The original project was implemented in C++.
+VectorX currently uses in-memory storage for vectors and documents.
 
-VectorX converts the existing implementation into Java while preserving its core behavior and API structure.
+The application does not require an external database for vector or document storage.
 
-The conversion includes:
+When the backend restarts:
 
-- Vector database
-- Brute Force search
-- KD-Tree
-- HNSW
-- Distance metrics
-- Vector operations
-- Document database
-- Document chunking
-- Ollama integration
-- Semantic search
-- RAG workflow
-- REST endpoints
-
-The project does not add a separate persistence layer because the original implementation uses in-memory storage.
+- Demo vectors are loaded again
+- Runtime-inserted vectors are cleared
+- Runtime-inserted documents are cleared
 
 ---
 
-## Storage
+# API Examples
 
-VectorX currently uses in-memory storage.
+## Insert Vector
 
-Vectors and documents are stored while the backend application is running.
+```http
+POST /insert
+Content-Type: application/json
+```
 
-Restarting the backend clears the current in-memory data and reloads the demo vectors.
+Example body:
 
-PostgreSQL is not required for the current implementation.
+```json
+{
+  "meta": "Example vector",
+  "cat": "demo",
+  "emb": [
+    0.1,
+    0.2,
+    0.3
+  ]
+}
+```
 
----
+The vector must contain the required number of dimensions.
 
-## Current Scope
+## List Vectors
 
-The project intentionally focuses on the functionality present in the original implementation.
+```http
+GET /items
+```
 
-It does not attempt to introduce additional database persistence, authentication, distributed storage, or other unrelated functionality.
+## Delete Vector
 
----
+```http
+DELETE /delete/{id}
+```
 
-## Screenshots
+## Insert Document
 
-Screenshots of the VectorX dashboard can be added here.
+```http
+POST /doc/insert
+Content-Type: application/json
+```
 
-Suggested structure:
+Example:
 
-```text
-docs/
-├── dashboard.png
-├── benchmark.png
-├── hnsw.png
-└── documents.png
+```json
+{
+  "title": "Vector Search",
+  "text": "Vector search allows systems to find information based on numerical representations of data."
+}
+```
+
+## Search Documents
+
+```http
+POST /doc/search
+Content-Type: application/json
+```
+
+Example:
+
+```json
+{
+  "question": "What is vector search?",
+  "k": 3
+}
+```
+
+## Ask AI
+
+```http
+POST /doc/ask
+Content-Type: application/json
+```
+
+Example:
+
+```json
+{
+  "question": "What is VectorX?",
+  "k": 3
+}
 ```
 
 ---
 
-## Development
+# Development
 
 ### Backend
 
 ```text
 Java 21
 Spring Boot
+Spring Web
 Maven
+REST APIs
 ```
 
 ### Frontend
@@ -610,6 +864,7 @@ Next.js
 React
 TypeScript
 Tailwind CSS
+Lucide React
 ```
 
 ### AI
@@ -620,8 +875,61 @@ nomic-embed-text
 llama3.2
 ```
 
+### Search Algorithms
+
+```text
+Brute Force
+KD-Tree
+HNSW
+```
+
 ---
 
-## License
+# Design Goals
 
-This project is intended as a development and demonstration project.
+VectorX focuses on:
+
+- Clear vector search implementations
+- Practical algorithm comparison
+- Simple REST APIs
+- Local AI integration
+- Semantic document retrieval
+- Interactive visualization
+- Clean developer experience
+- Lightweight in-memory operation
+
+---
+
+# Current Scope
+
+The current implementation focuses on vector search, document retrieval, benchmarking, HNSW inspection, and local AI-powered RAG.
+
+The application is intentionally lightweight and uses in-memory storage.
+
+Features such as distributed vector storage, authentication, cloud model hosting, and persistent production databases are outside the current scope.
+
+---
+
+# Screenshots
+
+Suggested screenshot structure:
+
+```text
+docs/
+├── dashboard.png
+├── benchmark.png
+├── hnsw.png
+└── documents.png
+```
+
+Example:
+
+```markdown
+![VectorX Dashboard](docs/dashboard.png)
+```
+
+---
+
+# License
+
+This project is intended for development, demonstration, and portfolio purposes.
