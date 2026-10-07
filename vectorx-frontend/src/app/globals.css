@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  --background: #171613;
+  --foreground: #e8e2d8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: #b56a3b;
+  color: #171613;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171613;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b3731;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5e574d;
+}
+@keyframes vectorx-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vectorx-node {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+.vectorx-enter {
+  animation: vectorx-fade-up 500ms ease-out both;
+}
+
+.vectorx-node {
+  animation: vectorx-node 3.5s ease-in-out infinite;
+}
+
+.vectorx-node:nth-child(2n) {
+  animation-delay: 700ms;
+}
+
+.vectorx-node:nth-child(3n) {
+  animation-delay: 1400ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vectorx-enter,
+  .vectorx-node {
+    animation: none;
+  }
+}
