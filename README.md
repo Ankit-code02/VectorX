@@ -4,7 +4,7 @@ VectorX is a Java-based vector search and document retrieval platform built with
 
 It provides multiple vector indexing and search algorithms, configurable distance metrics, document embedding and semantic retrieval, benchmarking tools, HNSW graph inspection, and Ollama-powered RAG capabilities through a unified web dashboard.
 
-Live Link - https://vector-x-mu.vercel.app/?utm_source=chatgpt.com [Frontend]
+Live Link - https://vector-x-mu.vercel.app/?utm_source=chatgpt.com [Frontend] /
 Live Link - https://vectorx-backend-f0y0.onrender.com/status [Backend]
 
 ---
