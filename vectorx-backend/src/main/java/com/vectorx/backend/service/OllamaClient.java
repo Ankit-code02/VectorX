@@ -14,9 +14,15 @@ public class OllamaClient {
 
     public OllamaClient() {
 
+        String ollamaUrl = System.getenv().getOrDefault(
+                "OLLAMA_URL",
+                "http://127.0.0.1:11434"
+        );
+
         this.client = RestClient
                 .builder()
-                .baseUrl("http://127.0.0.1:11434")
+                .baseUrl(ollamaUrl)
+                .defaultHeader("Host", "localhost:11434")
                 .build();
     }
 
